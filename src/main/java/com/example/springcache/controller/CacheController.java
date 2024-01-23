@@ -15,4 +15,14 @@ public class CacheController {
     public String getData() {
         return cacheService.getData();
     }
+
+    @GetMapping("/refreshData")
+    public String getAndUpdateData() {
+        return cacheService.getAndUpdateData();
+    }
+
+    @GetMapping("/evict")
+    public void cleanAllData() {
+        cacheService.cleanAllData();
+    }
 }
