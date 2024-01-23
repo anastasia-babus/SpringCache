@@ -1,32 +1,49 @@
 package com.example.springcache.service;
 
-import com.example.springcache.dao.CacheRepository;
+import com.example.springcache.repository.CacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = "countries")
 public class CacheService {
 
     private final CacheRepository cacheRepository;
 
-    @Cacheable("data")
-    public String getData() {
-        return cacheRepository.getData();
-    }
-    @CachePut("data")
-    public String getAndUpdateData() {
-        return cacheRepository.getData();
+    private final CacheManager cacheManager;
+
+    @Cacheable
+    public List<String> getData() {
+        return cacheRepository.getAllCountries();
     }
 
-    @CacheEvict(cacheNames = "data", allEntries = true)
+    @Cacheable("continent")
+    public String getContinent(String countryName) {
+        return cacheRepository.getContinentByCountryName(countryName);
+    }
+
+    @CachePut
+    public List<String> getAndUpdateData() {
+        return cacheRepository.getAllCountries();
+    }
+
+    @CacheEvict(allEntries = true)
     public void cleanAllData(){
         log.info("Cache data is cleaned");
+    }
+
+    public void cacheManager(){
+        log.info("Cache names: {}", cacheManager.getCacheNames());
     }
 
 }
