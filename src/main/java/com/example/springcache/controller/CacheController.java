@@ -18,15 +18,9 @@ public class CacheController {
     public List<String> getAllCountries() {
         return cacheService.getData();
     }
-
     @GetMapping("/continent")
     public String getContinentByCountryName(@RequestParam("countryName") String countryName) {
         return cacheService.getContinent(countryName);
-    }
-
-    @GetMapping("/refresh")
-    public List<String> getAndUpdateData() {
-        return cacheService.getAndUpdateData();
     }
 
     @GetMapping("/evict")

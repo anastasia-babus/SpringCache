@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,22 +26,26 @@ public class CacheService {
         return cacheRepository.getAllCountries();
     }
 
-    @Cacheable("continent")
+    @Cacheable(value = "continent",
+            key = "#countryName"
+
+            // condition = "#countryName=='USA' || #countryName=='Brazil'"
+            //condition = "#result != null"
+            //condition = "#result != null and #result.length() > 6"
+            // unless = "#countryName=='USA'"
+            //same as
+            // condition = "!(#countryName=='USA')"
+    )
     public String getContinent(String countryName) {
         return cacheRepository.getContinentByCountryName(countryName);
     }
 
-    @CachePut
-    public List<String> getAndUpdateData() {
-        return cacheRepository.getAllCountries();
-    }
-
     @CacheEvict(allEntries = true)
-    public void cleanAllData(){
+    public void cleanAllData() {
         log.info("Cache data is cleaned");
     }
 
-    public void cacheManager(){
+    public void cacheManager() {
         log.info("Cache names: {}", cacheManager.getCacheNames());
     }
 
