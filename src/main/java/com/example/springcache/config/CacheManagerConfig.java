@@ -8,13 +8,17 @@ import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
 public class CacheManagerConfig {
-    @Bean("customCacheManager")
+
+    // Spring Boot will use primaryCacheManager as default for all the methods until we explicitly specify our alternateCacheManager for a method
+    @Primary
+    @Bean("primaryCacheManager")
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager() {
             @Override
@@ -27,5 +31,10 @@ public class CacheManagerConfig {
                         false);
             }
         };
+    }
+
+    @Bean
+    public CacheManager alternativeCacheManager() {
+        return new ConcurrentMapCacheManager("continent");
     }
 }
