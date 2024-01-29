@@ -1,5 +1,6 @@
 package com.example.springcache.controller;
 
+import com.example.springcache.repository.Country;
 import com.example.springcache.service.CacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,11 @@ public class CacheController {
     @GetMapping("/continent")
     public String getContinentByCountryName(@RequestParam("countryName") String countryName) {
         return cacheService.getContinent(countryName);
+    }
+
+    @GetMapping("/id-continent")
+    public Country getCountryByIdAndContinent(@RequestParam("id") Integer id, @RequestParam("continent") String continent) {
+        return cacheService.getCountryByContinentAndId(id, continent);
     }
 
     @GetMapping("/evict")

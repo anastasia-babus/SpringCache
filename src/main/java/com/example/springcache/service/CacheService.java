@@ -1,6 +1,7 @@
 package com.example.springcache.service;
 
 import com.example.springcache.repository.CacheRepository;
+import com.example.springcache.repository.Country;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
@@ -38,6 +39,11 @@ public class CacheService {
     )
     public String getContinent(String countryName) {
         return cacheRepository.getContinentByCountryName(countryName);
+    }
+
+    @Cacheable(cacheNames = "id-continent", key = "#id")
+    public Country getCountryByContinentAndId(Integer id, String continent) {
+        return cacheRepository.getContinentByIdAndContinent(id, continent);
     }
 
     @CacheEvict(allEntries = true)

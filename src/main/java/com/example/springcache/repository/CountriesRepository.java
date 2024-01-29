@@ -10,4 +10,6 @@ public interface CountriesRepository extends JpaRepository<Country, Integer> {
     List<Country> findAll();
 
     Optional<Country> findCountryByName(String countryName);
+
+    Optional<Country> findCountryByIdAndContinent(Integer id, String continent);
 }
