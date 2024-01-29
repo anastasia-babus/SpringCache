@@ -20,23 +20,14 @@ public class CacheService {
 
     private final CacheRepository cacheRepository;
 
-    private final CacheManager cacheManager;
+    private final CacheManager customCacheManager;
 
     @Cacheable
     public List<String> getData() {
         return cacheRepository.getAllCountries();
     }
 
-    @Cacheable(value = "continent",
-            key = "#countryName"
-
-            // condition = "#countryName=='USA' || #countryName=='Brazil'"
-            //condition = "#result != null"
-            //condition = "#result != null and #result.length() > 6"
-            // unless = "#countryName=='USA'"
-            //same as
-            // condition = "!(#countryName=='USA')"
-    )
+    @Cacheable(value = "continent", cacheManager = "customCacheManager")
     public String getContinent(String countryName) {
         return cacheRepository.getContinentByCountryName(countryName);
     }
@@ -52,7 +43,7 @@ public class CacheService {
     }
 
     public void cacheManager() {
-        log.info("Cache names: {}", cacheManager.getCacheNames());
+        log.info("Cache names: {}", customCacheManager.getCacheNames());
     }
 
 }
