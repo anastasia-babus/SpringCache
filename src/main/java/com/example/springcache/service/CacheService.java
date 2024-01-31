@@ -27,7 +27,7 @@ public class CacheService {
         return cacheRepository.getAllCountries();
     }
 
-    @Cacheable(value = "continent", cacheManager = "alternativeCacheManager")
+    @Cacheable(value = "continent")
     public String getContinent(String countryName) {
         return cacheRepository.getContinentByCountryName(countryName);
     }
