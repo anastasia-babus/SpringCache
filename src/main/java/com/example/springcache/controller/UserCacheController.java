@@ -34,4 +34,14 @@ public class UserCacheController {
         return userCacheService.getUserByFirstAndLastName(firstName, lastName);
     }
 
+    @GetMapping("/evict")
+    public void cleanAllData() {
+        userCacheService.cleanAllData();
+    }
+
+    @GetMapping("/cache-manager")
+    public void debugCacheManager() {
+        userCacheService.debugCacheManager();
+    }
+
 }
