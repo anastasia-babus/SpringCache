@@ -15,6 +15,9 @@ public class UserObj {
 
     private String address;
 
+    public boolean testMethod(){
+        return true;
+    }
     public static User userObjToUser(UserObj userObj){
         User user = new User();
         user.setId(userObj.getId());
