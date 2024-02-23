@@ -19,7 +19,7 @@ import static com.example.springcache.service.object.UserObj.userToUserObj;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-//@CacheConfig(cacheNames = "users")
+@CacheConfig(cacheNames = "users")
 public class UserCacheService {
 
     private final UserCacheRepository userCacheRepository;
@@ -31,12 +31,7 @@ public class UserCacheService {
         return userCacheRepository.getAllUsers();
     }
 
-    @Cacheable(
-            //keyGenerator = "customKeyGenerator",
-            condition = "#userId==2 || #userId==4"
-            //condition = "#result != null"
-            //unless = "#userId==1"
-    )
+    @Cacheable(cacheManager = "customCacheManager")
     public UserObj getUserById(Long userId) {
         return userToUserObj(userCacheRepository.getUserById(userId));
     }
@@ -47,7 +42,6 @@ public class UserCacheService {
     }
 
     @Cacheable
-            //(key = "#lastName")
     public UserObj getUserByFirstAndLastName(String firstName, String lastName) {
         return userToUserObj(userCacheRepository.getUserByFirstAndLastName(firstName, lastName));
     }
