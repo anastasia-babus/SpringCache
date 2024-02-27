@@ -31,7 +31,7 @@ public class UserCacheService {
         return userCacheRepository.getAllUsers();
     }
 
-    @Cacheable(cacheManager = "customCacheManager")
+    @Cacheable
     public UserObj getUserById(Long userId) {
         return userToUserObj(userCacheRepository.getUserById(userId));
     }

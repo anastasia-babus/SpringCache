@@ -3,8 +3,15 @@ package com.example.springcache.service.object;
 import com.example.springcache.repository.User;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
-public class UserObj {
+public class UserObj /*implements Serializable*/ {
+
+//    @Serial
+//    private static final long serialVersionUID = 8834133477714255084L;
+
     private Long id;
 
     private String firstName;
@@ -15,9 +22,6 @@ public class UserObj {
 
     private String address;
 
-    public boolean testMethod(){
-        return true;
-    }
     public static User userObjToUser(UserObj userObj){
         User user = new User();
         user.setId(userObj.getId());
